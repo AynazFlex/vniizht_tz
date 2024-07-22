@@ -26,7 +26,7 @@ const CharacteristicsTable: FC<IProps> = memo(
       (index: number, type: TTypes, pattern: RegExp) =>
       (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        const isValid = pattern.test(value);
+        const isValid = pattern.test(value) && String(+value) === value;
         valid.current[isValid ? "delete" : "add"](`${type}-${index}`);
         setItem((prev) =>
           prev.map((item, i) =>
@@ -41,10 +41,6 @@ const CharacteristicsTable: FC<IProps> = memo(
       };
 
     const handleSubmit = () => {
-      if (valid.current.size > 0) {
-        return;
-      }
-
       const sortCharacter = [...item].sort((a, b) => a.speed - b.speed);
 
       console.log(sortCharacter);
@@ -108,7 +104,13 @@ const CharacteristicsTable: FC<IProps> = memo(
             ))}
           </tbody>
         </table>
-        <button onClick={handleSubmit} disabled={!!valid.current.size}>
+        <button
+          onClick={handleSubmit}
+          disabled={
+            !!valid.current.size ||
+            JSON.stringify(item) === JSON.stringify(characteristics)
+          }
+        >
           Отправить данные
         </button>
       </div>
