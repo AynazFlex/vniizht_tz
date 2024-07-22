@@ -20,7 +20,7 @@ const CharacteristicsTable: FC<IProps> = memo(
     useEffect(() => {
       valid.current.clear();
       setItem([...characteristics]);
-    }, [trainName]);
+    }, [trainName, JSON.stringify(characteristics)]);
 
     const handleChange =
       (index: number, type: TTypes, pattern: RegExp) =>

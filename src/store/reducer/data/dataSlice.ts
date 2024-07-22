@@ -56,6 +56,7 @@ const dataSlice = createSlice({
       const train = state.data.find(({ name }) => name === state.trainName);
       if (train) {
         train.characteristics = payload;
+        state.characteristics = payload;
       }
     },
   },
